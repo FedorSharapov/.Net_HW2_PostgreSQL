@@ -237,8 +237,6 @@ CREATE TABLE IF NOT EXISTS ""Products""
                 foreach (var s in subwayStations)
                     Console.WriteLine(s.ToString());
             }
-
-            Console.WriteLine();
         }
 
         /// <summary>

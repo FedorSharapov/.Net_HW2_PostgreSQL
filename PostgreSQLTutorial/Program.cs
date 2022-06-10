@@ -50,15 +50,13 @@ namespace PostgreSQLTutorial
             // инициализация меню
             Menu menu = new Menu("База данных \"Avito\"");
             // меню с возможностью чтения таблиц из базы данных 
-            menu.Add(new Item("- Вывод таблицы \"SubwayStations\"", Tables.ReadSubwayStations));
-            menu.Add(new Item("- Вывод таблицы \"Users\"", Tables.ReadUsers));
-            menu.Add(new Item("- Вывод таблицы \"Products\"", Tables.ReadProducts));
+            menu.Add(new Item("Вывод таблицы \"SubwayStations\"", Tables.ReadSubwayStations));
+            menu.Add(new Item("Вывод таблицы \"Users\"", Tables.ReadUsers));
+            menu.Add(new Item("Вывод таблицы \"Products\"", Tables.ReadProducts));
             // меню с возможностью ввода данных в таблицу с сохранением в базе данных 
-            menu.Add(new Item("- Добавить в таблицу \"SubwayStations\"", Tables.AddSubwayStation));
-            menu.Add(new Item("- Добавить в таблицу \"Users\"", Tables.AddUser));
-            menu.Add(new Item("- Добавить в таблицу \"Products\"", Tables.AddProduct));
-            // вывод меню на дисплей
-            menu.Display();
+            menu.Add(new Item("Добавить в таблицу \"SubwayStations\"", Tables.AddSubwayStation));
+            menu.Add(new Item("Добавить в таблицу \"Users\"", Tables.AddUser));
+            menu.Add(new Item("Добавить в таблицу \"Products\"", Tables.AddProduct));
 
             // обновление меню по действиям от пользователя
             menu.Updating();

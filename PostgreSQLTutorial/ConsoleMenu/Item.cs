@@ -6,24 +6,46 @@ namespace PostgreSQLTutorial.ConsoleMenu
 {
     class Item
     {
-        string _name;
-        public string Name { get {return _name;} }
-        public bool Selected { get; set; }
+        bool _selected = false;
+
+        public int Number { get; set; }
+        public string Name { get; }
         public Action EnterFunction { get; set; }
 
-        public Item(string name, Action enterFunction)
+        public Item(string name)
         {
-            _name = name;
+            Name = name;
+        }
+        public Item(string name, Action enterFunction) : this(name)
+        {
             EnterFunction = enterFunction;
+        }
+
+        public void Select(bool value)
+        {
+            _selected = value;
+            Console.SetCursorPosition(0, Number);
+            Display();
         }
         public void Display()
         {
-            if(Selected)
-                Console.BackgroundColor = ConsoleColor.DarkGray;      
-            
-            Console.WriteLine(_name);
+            if (_selected)
+            {
+                Console.BackgroundColor = ConsoleColor.Gray;
+                Console.ForegroundColor = ConsoleColor.Black;
 
-            Console.BackgroundColor = ConsoleColor.Black;
+                Console.WriteLine($" {Name} ");
+
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.White;
+
+                Console.WriteLine($"  {Name}");
+            }
         }
         public void Enter()
         {

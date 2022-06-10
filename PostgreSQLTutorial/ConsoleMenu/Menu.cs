@@ -5,25 +5,22 @@ namespace PostgreSQLTutorial.ConsoleMenu
 {
     class Menu
     {
-        LinkedList<Item> _items = new LinkedList<Item>();
-        LinkedListNode<Item> _currentItem;
+        List<Item> _items = new List<Item>();
+        int _curNumItem = 0;
 
         public Menu(string headerName)
         {
             Console.Title = headerName;
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.CursorVisible = false;
         }
 
         public void Add(Item item)
         {
-            _items.AddLast(item);
+            _items.Add(item);
+            item.Number = _items.Count - 1;
 
             if (_items.Count == 1)
-            {
-                _currentItem = _items.First;
-                _currentItem.Value.Selected = true;
-            }
+                _items[0].Select(true);
         }
 
         public void Display()
@@ -56,39 +53,35 @@ namespace PostgreSQLTutorial.ConsoleMenu
         }
         void StepDown()
         {
-            _currentItem.Value.Selected = false;
+            _items[_curNumItem].Select(false);
 
-            if (_currentItem.Next == null)
-                _currentItem = _items.First;
+            if (_curNumItem == _items.Count - 1)
+                _curNumItem = 0;
             else
-                _currentItem = _currentItem.Next;
+                _curNumItem++;
 
-            _currentItem.Value.Selected = true;
-
-            Display();
+            _items[_curNumItem].Select(true);
         }
         void StepUp()
         {
-            _currentItem.Value.Selected = false;
+            _items[_curNumItem].Select(false);
 
-            if (_currentItem.Previous == null)
-                _currentItem = _items.Last;
+            if (_curNumItem == 0)
+                _curNumItem = _items.Count - 1;
             else
-                _currentItem = _currentItem.Previous;
+                _curNumItem--;
 
-            _currentItem.Value.Selected = true;
-
-            Display();
+            _items[_curNumItem].Select(true);
         }
         void StepIn()
         {
-            ConsoleHelper.DisplayHeader(_currentItem.Value.Name);
+            Display();
 
-            _currentItem.Value.Enter();
+            ConsoleHelper.DisplayHeader(_items[_curNumItem].Name);
+
+            _items[_curNumItem].Enter();
 
             WaitingStepOut();
-
-            Display();
         }
         void WaitingStepOut()
         {
@@ -100,7 +93,10 @@ namespace PostgreSQLTutorial.ConsoleMenu
                 {
                     var key = Console.ReadKey().Key;
                     if (key == ConsoleKey.Backspace)
+                    {
+                        Display();
                         break;
+                    }
                     else if (key == ConsoleKey.Escape)
                         Exit();
                 }
@@ -109,6 +105,8 @@ namespace PostgreSQLTutorial.ConsoleMenu
 
         public void Updating()
         {
+            Display();
+
             while (true)
             {
                 if (Console.KeyAvailable)
